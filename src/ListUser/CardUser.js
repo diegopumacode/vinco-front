@@ -53,7 +53,7 @@ export default function CardUser({ user, children }) {
                         {user.lastName}
                     </Text>
                     <Text fontWeight='bold'
-                        fontSize='9rem'
+                        fontSize='.8rem'
                         marginBottom='5px' textTransform="capitalize">
                         {user.age} años
                         
