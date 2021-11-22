@@ -82,9 +82,6 @@ export default function CardUser({ user, children }) {
                             </Tooltip>
                     }
 
-
-
-
                 </Flex>
             </Flex>
 

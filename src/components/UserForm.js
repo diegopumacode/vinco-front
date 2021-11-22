@@ -13,6 +13,17 @@ import {
     Input
 } from "@chakra-ui/react"
 import { useForm } from 'react-hook-form';
+
+
+/**
+ * Formulario de usuarios
+ * @param {defaultValues} 
+ * @param {onFormSubmit} 
+ * @param {isLoading} 
+ * @param {actionAfterSubmit}
+ * @param {titleSubmit}
+ * @returns 
+ */
 export default function UserForm({ defaultValues, onFormSubmit, isLoading, actionAfterSubmit, titleSubmit }) {
 
     const { register, handleSubmit } = useForm({ defaultValues })
@@ -50,6 +61,7 @@ export default function UserForm({ defaultValues, onFormSubmit, isLoading, actio
                         </NumberInputStepper>
                     </NumberInput>
                 </FormControl>
+
 
                 <Button type='submit' marginY={4}>
                     {isLoading ? <Spinner size="xs" /> : titleSubmit}
