@@ -8,7 +8,8 @@ import {
     ModalBody,
     ModalCloseButton,
     Button,
-    useToast
+    useToast,
+    Tooltip
 } from "@chakra-ui/react"
 import { useDisclosure } from '@chakra-ui/hooks'
 import { updateUser } from '../api'
@@ -50,13 +51,15 @@ export default function UpdateUser({ user }) {
     return (
         <>
 
-            <Button colorScheme="blue" variant="solid" color='white' size="sm" onClick={onOpen}>
-                <AiFillEdit />
-            </Button>
+            <Tooltip label="Editar Usuario">
+                <Button colorScheme="blue" variant="solid" color='white' size="sm" onClick={onOpen}>
+                    <AiFillEdit />
+                </Button>
+            </Tooltip>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Actualizar Usuario</ModalHeader>
+                    <ModalHeader>Editar Usuario</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
                         <UserForm defaultValues={user} onFormSubmit={onFormSubmit} isLoading={isLoading} actionAfterSubmit={onClose} titleSubmit={'Actualizar Usuario'} />

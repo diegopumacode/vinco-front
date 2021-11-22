@@ -8,15 +8,16 @@ import { useMutation, useQueryClient } from 'react-query';
 import { activeUser, removeUser } from '../api';
 import { Spinner } from '@chakra-ui/spinner';
 import { useToast } from '@chakra-ui/toast';
+import { Tooltip } from '@chakra-ui/tooltip';
 
 export default function CardUser({ user, children }) {
 
     const queryClient = useQueryClient()
     const { mutateAsync: mutateAsyncRemoveUser, isLoading: isLoadingRemoveUser } = useMutation(removeUser)
     const { mutateAsync: mutateActiveUser, isLoading: isLoadingActiveUser } = useMutation(activeUser)
-    
+
     const toast = useToast()
-    
+
     const remove = async (id) => {
         await mutateAsyncRemoveUser(id)
         queryClient.invalidateQueries('users')
@@ -57,7 +58,8 @@ export default function CardUser({ user, children }) {
                         display='inline'
                         borderRadius='30px'
                         paddingX={4}
-                        paddingY={1}>
+                        paddingY={1}
+                        textTransform="capitalize">
                         {user.occupation}
                     </Box>
                 </Box>
@@ -67,13 +69,17 @@ export default function CardUser({ user, children }) {
                     {
                         user.status
                             ?
-                            <Button colorScheme="red" variant="solid" color='white' size="sm" onClick={() => { remove(user.id) }}>
-                                {isLoadingRemoveUser ? <Spinner size='xs' /> : <AiFillDelete />}
-                            </Button>
+                            <Tooltip label="Archivar Usuario">
+                                <Button colorScheme="red" variant="solid" color='white' size="sm" onClick={() => { remove(user.id) }}>
+                                    {isLoadingRemoveUser ? <Spinner size='xs' /> : <AiFillDelete />}
+                                </Button>
+                            </Tooltip>
                             :
-                            <Button colorScheme="green" variant="solid" color='white' size="sm" onClick={() => { active(user.id) }}>
-                                {isLoadingActiveUser ? <Spinner size='xs' /> : <AiFillExclamationCircle />}
-                            </Button>
+                            <Tooltip label="Activar Usuario">
+                                <Button colorScheme="green" variant="solid" color='white' size="sm" onClick={() => { active(user.id) }}>
+                                    {isLoadingActiveUser ? <Spinner size='xs' /> : <AiFillExclamationCircle />}
+                                </Button>
+                            </Tooltip>
                     }
 
 
