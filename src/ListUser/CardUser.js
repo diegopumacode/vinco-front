@@ -52,7 +52,12 @@ export default function CardUser({ user, children }) {
                         {user.firstName} {` `}
                         {user.lastName}
                     </Text>
-
+                    <Text fontWeight='bold'
+                        fontSize='9rem'
+                        marginBottom='5px' textTransform="capitalize">
+                        {user.age} años
+                        
+                    </Text>
                     <Box background='green.200'
                         fontSize='.8rem'
                         display='inline'
