@@ -1,5 +1,3 @@
-import { Button } from '@chakra-ui/button'
-import { useDisclosure } from '@chakra-ui/hooks';
 import React from 'react'
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import {
@@ -33,44 +31,45 @@ export default function UserForm({ defaultValues, onFormSubmit, isLoading }) {
     const { register, handleSubmit } = useForm({ defaultValues })
 
     const onSubmit = handleSubmit((data) => {
+        console.log(data)
         onFormSubmit(data)
     })
 
     return (
         <>
 
-            <Box as='form' display='flex' flexDirection='column' gridGap='20px'>
+            <Box as='form' display='flex' flexDirection='column' gridGap='20px' onSubmit={onSubmit}>
 
-                <FormControl id="firstNsme" isRequired>
+                <FormControl id="firstName" isRequired >
                     <FormLabel>Nombre :</FormLabel>
-                    <Input ref={register} id="firstName" name="firstName" />
+                    <Input {...register("firstName")} id="firstName" name="firstName"/>
                 </FormControl>
                 <FormControl id="lastName" isRequired>
                     <FormLabel>Apellido :</FormLabel>
-                    <Input ref={register} id="lastName" name="lastName" />
+                    <Input {...register("lastName")} id="lastName" name="lastName" />
                 </FormControl>
                 <FormControl id="occupation" isRequired>
                     <FormLabel>Profesion/Ocupacion :</FormLabel>
-                    <Input ref={register} id="occupation" name="occupation" />
+                    <Input {...register("occupation")} id="occupation" name="occupation" />
                 </FormControl>
                 <FormControl id="age">
                     <FormLabel>Edad :</FormLabel>
-                    <NumberInput ref={register} id="age" name="age">
-                        <NumberInputField />
+                    <NumberInput >
+                        <NumberInputField {...register("age")} id="age" name="age"/>
                         <NumberInputStepper>
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
                     </NumberInput>
                 </FormControl>
-                <FormControl id="status">
+                {/* <FormControl id="status">
                     <FormLabel>Estado:</FormLabel>
-                    <Select ref={register} placeholder="Selecciona estado" id="status" name="status">
+                    <Select {...register("status")} placeholder="Selecciona estado" id="status" name="status">
                         <option value='1'>Activo</option>
                         <option value='0'>Desactivado</option>
                     </Select>
-                </FormControl>
-                <Button>
+                </FormControl> */}
+                <Button type='submit'>
                     {isLoading ? <Spinner size="xs" /> : "Submit"}
                 </Button>
             </Box>
