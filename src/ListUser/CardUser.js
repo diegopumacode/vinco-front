@@ -7,21 +7,38 @@ import UpdateUser from '../UpdateUser';
 import { useMutation, useQueryClient } from 'react-query';
 import { activeUser, removeUser } from '../api';
 import { Spinner } from '@chakra-ui/spinner';
+import { useToast } from '@chakra-ui/toast';
 
 export default function CardUser({ user, children }) {
 
     const queryClient = useQueryClient()
     const { mutateAsync: mutateAsyncRemoveUser, isLoading: isLoadingRemoveUser } = useMutation(removeUser)
     const { mutateAsync: mutateActiveUser, isLoading: isLoadingActiveUser } = useMutation(activeUser)
-
+    
+    const toast = useToast()
+    
     const remove = async (id) => {
         await mutateAsyncRemoveUser(id)
         queryClient.invalidateQueries('users')
+        toast({
+            title: "Usuario Archivado",
+            description: "Se archivo al usuario",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+        })
     }
 
     const active = async (id) => {
         await mutateActiveUser(id)
         queryClient.invalidateQueries('users')
+        toast({
+            title: "Usuario Activado",
+            description: "Se actualizo el usuario como activo",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+        })
     }
 
     return (

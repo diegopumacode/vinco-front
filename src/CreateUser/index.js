@@ -7,26 +7,40 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button
+    Button,
+    useToast
 } from "@chakra-ui/react"
 import { useDisclosure } from '@chakra-ui/hooks'
 export default function CreateUser() {
     const queryClient = useQueryClient()
     const { mutateAsync, isLoading } = useMutation(createUser)
     const { isOpen, onOpen, onClose } = useDisclosure()
-
-
-
+    const toast = useToast()
     const onFormSubmit = async (data) => {
         try {
             console.log({ ...data, age: +data.age })
             let response = await mutateAsync({ ...data })
             queryClient.invalidateQueries('users')
+            if (response) {
+                toast({
+                    title: "Usuario creado",
+                    description: "El usuario fue creado uwu/",
+                    status: "success",
+                    duration: 1000,
+                    isClosable: true,
+                })
+            }
+
         } catch (error) {
-            console.log(error)
+            toast({
+                title: "Hubo un error al crear el usuario",
+                description: "Intenta crear el usuario otra vez :,)",
+                status: "error",
+                duration: 1000,
+                isClosable: true,
+            })
         }
     }
 
@@ -39,7 +53,7 @@ export default function CreateUser() {
                     <ModalHeader>Crear Usuario</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <UserForm onFormSubmit={onFormSubmit} isLoading={isLoading} actionAfterSubmit={onClose} titleSubmit={'Crear Usuario'}/>
+                        <UserForm onFormSubmit={onFormSubmit} isLoading={isLoading} actionAfterSubmit={onClose} titleSubmit={'Crear Usuario'} />
                     </ModalBody>
                 </ModalContent>
             </Modal>

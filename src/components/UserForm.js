@@ -1,29 +1,16 @@
 import React from 'react'
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-} from "@chakra-ui/react"
 import {
     FormControl,
     FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-    Input,
     Box,
     NumberInputStepper,
     NumberIncrementStepper,
     NumberDecrementStepper,
     NumberInputField,
     NumberInput,
-    Select,
     Button,
-    Spinner
+    Spinner,
+    Input
 } from "@chakra-ui/react"
 import { useForm } from 'react-hook-form';
 export default function UserForm({ defaultValues, onFormSubmit, isLoading, actionAfterSubmit, titleSubmit }) {
@@ -53,7 +40,7 @@ export default function UserForm({ defaultValues, onFormSubmit, isLoading, actio
                     <FormLabel>Profesion/Ocupacion :</FormLabel>
                     <Input {...register("occupation")} id="occupation" name="occupation" />
                 </FormControl>
-                <FormControl id="age">
+                <FormControl id="age" isRequired>
                     <FormLabel>Edad :</FormLabel>
                     <NumberInput >
                         <NumberInputField {...register("age")} id="age" name="age"/>

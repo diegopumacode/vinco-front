@@ -5,27 +5,45 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button
+    Button,
+    useToast
 } from "@chakra-ui/react"
 import { useDisclosure } from '@chakra-ui/hooks'
 import { updateUser } from '../api'
 import { useMutation, useQueryClient } from 'react-query'
-import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
+import { AiFillEdit } from 'react-icons/ai'
+
 export default function UpdateUser({ user }) {
     const queryClient = useQueryClient()
     const { mutateAsync, isLoading } = useMutation(updateUser)
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const toast = useToast()
+
 
     const onFormSubmit = async (data) => {
         try {
             console.log({ ...data, age: +data.age })
             let response = await mutateAsync({ ...data })
             queryClient.invalidateQueries('users')
+            if (response) {
+                toast({
+                    title: "Usuario Actualizado",
+                    description: "Se actualizo el usuario con exito",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                })
+            }
         } catch (error) {
-            console.log(error)
+            toast({
+                title: "Hubo un error al actualizar usuario",
+                description: "Intenta actualizar al usuario otra vez :')",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            })
         }
     }
 

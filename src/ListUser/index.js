@@ -1,13 +1,12 @@
-import { Container, Flex, SimpleGrid, Button, Spinner } from '@chakra-ui/react';
+import { Container, Flex, SimpleGrid, Spinner } from '@chakra-ui/react';
 import React from 'react'
 import { getAllUsers } from '../api';
 import { useQuery } from "react-query";
 import CardUser from './CardUser';
-import { AiFillDelete } from 'react-icons/ai';
 
 export default function ListUser() {
     const { data, error, isLoading, isError } = useQuery("users", getAllUsers);
-    console.log(data)
+    
     if (isLoading) {
         return (
             <Container>
