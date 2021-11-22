@@ -26,13 +26,14 @@ import {
     Spinner
 } from "@chakra-ui/react"
 import { useForm } from 'react-hook-form';
-export default function UserForm({ defaultValues, onFormSubmit, isLoading }) {
+export default function UserForm({ defaultValues, onFormSubmit, isLoading, actionAfterSubmit, titleSubmit }) {
 
     const { register, handleSubmit } = useForm({ defaultValues })
 
     const onSubmit = handleSubmit((data) => {
         console.log(data)
         onFormSubmit(data)
+        actionAfterSubmit()
     })
 
     return (
@@ -70,7 +71,7 @@ export default function UserForm({ defaultValues, onFormSubmit, isLoading }) {
                     </Select>
                 </FormControl> */}
                 <Button type='submit'>
-                    {isLoading ? <Spinner size="xs" /> : "Submit"}
+                    {isLoading ? <Spinner size="xs" /> : titleSubmit}
                 </Button>
             </Box>
 
