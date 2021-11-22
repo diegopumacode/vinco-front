@@ -4,9 +4,9 @@ import { Image } from '@chakra-ui/image'
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
-export default function Card({name,occupation,children}) {
+export default function CardUser({ name, occupation, children }) {
     return (
-        <Box  minHeight='180px' position='relative' boxShadow="md" rounded="md" padding={5}>
+        <Box minHeight='180px' position='relative' boxShadow="md" rounded="md" padding={5}>
             <Flex flexDirection='column' justifyContent='space-between' height='200px'>
                 <Box>
                     <Text fontWeight='bold'
