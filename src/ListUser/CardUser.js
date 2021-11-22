@@ -2,17 +2,37 @@ import React from 'react'
 import { Button } from '@chakra-ui/button'
 import { Image } from '@chakra-ui/image'
 import { Box, Flex, Text } from '@chakra-ui/layout'
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiFillExclamationCircle } from "react-icons/ai";
+import UpdateUser from '../UpdateUser';
+import { useMutation, useQueryClient } from 'react-query';
+import { activeUser, removeUser } from '../api';
+import { Spinner } from '@chakra-ui/spinner';
 
-export default function CardUser({ name, occupation, children }) {
+export default function CardUser({ user, children }) {
+
+    const queryClient = useQueryClient()
+    const { mutateAsync: mutateAsyncRemoveUser, isLoading: isLoadingRemoveUser } = useMutation(removeUser)
+    const { mutateAsync: mutateActiveUser, isLoading: isLoadingActiveUser } = useMutation(activeUser)
+
+    const remove = async (id) => {
+        await mutateAsyncRemoveUser(id)
+        queryClient.invalidateQueries('users')
+    }
+
+    const active = async (id) => {
+        await mutateActiveUser(id)
+        queryClient.invalidateQueries('users')
+    }
+
     return (
-        <Box minHeight='180px' position='relative' boxShadow="md" rounded="md" padding={5}>
+        <Box minHeight='180px' position='relative' boxShadow="md" rounded="md" padding={5} background={user.status ? 'transparent' : 'rgba(255, 100, 100, 0.2)'}>
             <Flex flexDirection='column' justifyContent='space-between' height='200px'>
                 <Box>
                     <Text fontWeight='bold'
                         fontSize='1.3rem'
-                        marginBottom='5px'>
-                        {name}
+                        marginBottom='5px' textTransform="capitalize">
+                        {user.firstName} {` `}
+                        {user.lastName}
                     </Text>
 
                     <Box background='green.200'
@@ -21,19 +41,32 @@ export default function CardUser({ name, occupation, children }) {
                         borderRadius='30px'
                         paddingX={4}
                         paddingY={1}>
-                        {occupation}
+                        {user.occupation}
                     </Box>
                 </Box>
                 <Flex gridGap={2}>
-                    {children}
+                    <UpdateUser user={user} />
+
+                    {
+                        user.status
+                            ?
+                            <Button colorScheme="red" variant="solid" color='white' size="sm" onClick={() => { remove(user.id) }}>
+                                {isLoadingRemoveUser ? <Spinner size='xs' /> : <AiFillDelete />}
+                            </Button>
+                            :
+                            <Button colorScheme="green" variant="solid" color='white' size="sm" onClick={() => { active(user.id) }}>
+                                {isLoadingActiveUser ? <Spinner size='xs' /> : <AiFillExclamationCircle />}
+                            </Button>
+                    }
+
+
+
+
                 </Flex>
             </Flex>
 
 
             <Image position='absolute' zIndex='-1' src='https://cdn-icons-png.flaticon.com/512/4815/4815145.png' width='140px' bottom='0' right='0' opacity='.6' />
-
-
-
 
         </Box>
     )

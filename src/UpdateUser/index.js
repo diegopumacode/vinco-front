@@ -1,6 +1,4 @@
 import React from 'react'
-import { useMutation, useQueryClient } from 'react-query'
-import { createUser } from '../api'
 import UserForm from '../components/UserForm'
 import {
     Modal,
@@ -13,12 +11,13 @@ import {
     Button
 } from "@chakra-ui/react"
 import { useDisclosure } from '@chakra-ui/hooks'
-export default function CreateUser() {
+import { updateUser } from '../api'
+import { useMutation, useQueryClient } from 'react-query'
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
+export default function UpdateUser({ user }) {
     const queryClient = useQueryClient()
-    const { mutateAsync, isLoading } = useMutation(createUser)
+    const { mutateAsync, isLoading } = useMutation(updateUser)
     const { isOpen, onOpen, onClose } = useDisclosure()
-
-
 
     const onFormSubmit = async (data) => {
         try {
@@ -32,14 +31,17 @@ export default function CreateUser() {
 
     return (
         <>
-            <Button onClick={onOpen} marginY={5}>Crear Usuario</Button>
+
+            <Button colorScheme="blue" variant="solid" color='white' size="sm" onClick={onOpen}>
+                <AiFillEdit />
+            </Button>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Crear Usuario</ModalHeader>
+                    <ModalHeader>Actualizar Usuario</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <UserForm onFormSubmit={onFormSubmit} isLoading={isLoading} actionAfterSubmit={onClose} titleSubmit={'Crear Usuario'}/>
+                        <UserForm defaultValues={user} onFormSubmit={onFormSubmit} isLoading={isLoading} actionAfterSubmit={onClose} titleSubmit={'Actualizar Usuario'} />
                     </ModalBody>
                 </ModalContent>
             </Modal>

@@ -63,14 +63,8 @@ export default function UserForm({ defaultValues, onFormSubmit, isLoading, actio
                         </NumberInputStepper>
                     </NumberInput>
                 </FormControl>
-                {/* <FormControl id="status">
-                    <FormLabel>Estado:</FormLabel>
-                    <Select {...register("status")} placeholder="Selecciona estado" id="status" name="status">
-                        <option value='1'>Activo</option>
-                        <option value='0'>Desactivado</option>
-                    </Select>
-                </FormControl> */}
-                <Button type='submit'>
+
+                <Button type='submit' marginY={4}>
                     {isLoading ? <Spinner size="xs" /> : titleSubmit}
                 </Button>
             </Box>

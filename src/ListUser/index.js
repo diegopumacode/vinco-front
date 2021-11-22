@@ -27,11 +27,7 @@ export default function ListUser() {
             <SimpleGrid columns={[1, 2, 4]} spacing="30px" marginBottom={12}>
                 {data.map(user => {
                     return (
-                        <CardUser key={user.id} name={`${user.firstName} ${user.lastName}`} occupation={user.occupation}>
-                            <Button colorScheme="red" variant="solid" color='white' size="sm">
-                                <AiFillDelete />
-                            </Button>
-                        </CardUser>
+                        <CardUser key={user.id} user={user}/> 
                     )
                 })}
 
